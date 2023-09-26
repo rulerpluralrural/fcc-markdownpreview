@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inclusive+Sans&family=Inter:wght@200&family=Yantramanav:wght@300;400;500&display=swap');
+
+*,
+*::after,
+*::before {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+.hide {
+	display: none;
+}
+
+#preview * {
+	padding-block: 1rem;
+}
