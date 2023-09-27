@@ -1,18 +1,27 @@
 import React from "react";
 import { marked } from "marked";
 
-export default class Editor extends React.Component {
+export default class Previewer extends React.Component {
 
-    changeFullScreen = () => {
-        this.props.changePreview({
-            closeEditor: true
-        })
-    }
+	changeFullScreen = () => {
+		this.props.toggleEditor({
+			openEditor: false,
+		});
+	};
+
+	changeSmallScreen = () => {
+		this.props.toggleEditor({
+			openEditor: true,
+		})
+	}
+
 	render() {
 		return (
-			<div className={`preview-wrapper max-w-3xl my-3 mx-auto min-h-200 break-words shadow-[5px_5px_10px_0_rgba(0,0,0,0.6)]  ${!this.props.closeEditor ? this.props.maximize : this.props.minimize}`}>
+			<div
+				className='preview-wrapper max-w-3xl my-3 mx-auto min-h-200 break-words shadow-[5px_5px_10px_0_rgba(0,0,0,0.6)]'
+			>
 				<div className="toolbar bg-slate-800 flex items-center justify-between px-3 py-2 ">
-                <div className="icons-left flex items-center gap-2">
+					<div className="icons-left flex items-center gap-2">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							height="1em"
@@ -23,29 +32,40 @@ export default class Editor extends React.Component {
 						</svg>
 						<p className="text-slate-100 font-bold text-xl">Previewer</p>
 					</div>
-                    
-                    <div className="icons-right">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							height="1em"
-							viewBox="0 0 512 512"
-							className="fill-slate-100 cursor-pointer hover:fill-slate-300 text-xl"
-                            onClick={this.changeFullScreen}
-						>
-							<path d="M200 32H56C42.7 32 32 42.7 32 56V200c0 9.7 5.8 18.5 14.8 22.2s19.3 1.7 26.2-5.2l40-40 79 79-79 79L73 295c-6.9-6.9-17.2-8.9-26.2-5.2S32 302.3 32 312V456c0 13.3 10.7 24 24 24H200c9.7 0 18.5-5.8 22.2-14.8s1.7-19.3-5.2-26.2l-40-40 79-79 79 79-40 40c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H456c13.3 0 24-10.7 24-24V312c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2l-40 40-79-79 79-79 40 40c6.9 6.9 17.2 8.9 26.2 5.2s14.8-12.5 14.8-22.2V56c0-13.3-10.7-24-24-24H312c-9.7 0-18.5 5.8-22.2 14.8s-1.7 19.3 5.2 26.2l40 40-79 79-79-79 40-40c6.9-6.9 8.9-17.2 5.2-26.2S209.7 32 200 32z" />
-						</svg>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							height="1em"
-							viewBox="0 0 512 512"
-							className="hide fill-slate-100 cursor-pointer text-xl"
-						>
-							<path d="M344 0H488c13.3 0 24 10.7 24 24V168c0 9.7-5.8 18.5-14.8 22.2s-19.3 1.7-26.2-5.2l-39-39-87 87c-9.4 9.4-24.6 9.4-33.9 0l-32-32c-9.4-9.4-9.4-24.6 0-33.9l87-87L327 41c-6.9-6.9-8.9-17.2-5.2-26.2S334.3 0 344 0zM168 512H24c-13.3 0-24-10.7-24-24V344c0-9.7 5.8-18.5 14.8-22.2s19.3-1.7 26.2 5.2l39 39 87-87c9.4-9.4 24.6-9.4 33.9 0l32 32c9.4 9.4 9.4 24.6 0 33.9l-87 87 39 39c6.9 6.9 8.9 17.2 5.2 26.2s-12.5 14.8-22.2 14.8z" />
-						</svg>
+
+					<div className="icons-right">
+						{this.props.openEditor ? (
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								height="1em"
+								viewBox="0 0 512 512"
+								className="fill-slate-100 cursor-pointer hover:fill-slate-300 text-xl"
+								onClick={this.changeFullScreen}
+							>
+								<path d="M200 32H56C42.7 32 32 42.7 32 56V200c0 9.7 5.8 18.5 14.8 22.2s19.3 1.7 26.2-5.2l40-40 79 79-79 79L73 295c-6.9-6.9-17.2-8.9-26.2-5.2S32 302.3 32 312V456c0 13.3 10.7 24 24 24H200c9.7 0 18.5-5.8 22.2-14.8s1.7-19.3-5.2-26.2l-40-40 79-79 79 79-40 40c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H456c13.3 0 24-10.7 24-24V312c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2l-40 40-79-79 79-79 40 40c6.9 6.9 17.2 8.9 26.2 5.2s14.8-12.5 14.8-22.2V56c0-13.3-10.7-24-24-24H312c-9.7 0-18.5 5.8-22.2 14.8s-1.7 19.3 5.2 26.2l40 40-79 79-79-79 40-40c6.9-6.9 8.9-17.2 5.2-26.2S209.7 32 200 32z" />
+							</svg>
+						) : (
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								height="1em"
+								viewBox="0 0 512 512"
+								className="fill-slate-100 cursor-pointer text-xl"
+								onClick={this.changeSmallScreen}
+							>
+								<path d="M344 0H488c13.3 0 24 10.7 24 24V168c0 9.7-5.8 18.5-14.8 22.2s-19.3 1.7-26.2-5.2l-39-39-87 87c-9.4 9.4-24.6 9.4-33.9 0l-32-32c-9.4-9.4-9.4-24.6 0-33.9l87-87L327 41c-6.9-6.9-8.9-17.2-5.2-26.2S334.3 0 344 0zM168 512H24c-13.3 0-24-10.7-24-24V344c0-9.7 5.8-18.5 14.8-22.2s19.3-1.7 26.2 5.2l39 39 87-87c9.4-9.4 24.6-9.4 33.9 0l32 32c9.4 9.4 9.4 24.6 0 33.9l-87 87 39 39c6.9 6.9 8.9 17.2 5.2 26.2s-12.5 14.8-22.2 14.8z" />
+							</svg>
+						)}
 					</div>
 				</div>
-                <div id="preview" className="preview bg-slate-700 p-5 text-[#5bff3a] font-['Inclusive sans'] text-lg font-base"  dangerouslySetInnerHTML={{__html: marked(this.props.input, {breaks: true})}} >
-                </div>
+				<div
+					id="preview"
+					className={`preview bg-slate-700 p-5 text-[#5bff3a] font-['Inclusive sans'] text-lg font-base  ${
+						!this.props.openEditor ? "h-screen" : ""
+					}`}
+					dangerouslySetInnerHTML={{
+						__html: marked(this.props.input, { breaks: true }),
+					}}
+				></div>
 			</div>
 		);
 	}
